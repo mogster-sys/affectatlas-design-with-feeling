@@ -46,8 +46,8 @@ const Problem = () => {
             </div>
             
             <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 tracking-tight">
-              Design is emotional.{" "}
-              <span className="text-muted-foreground">Your process probably is not.</span>
+              People are emotional.{" "}
+              <span className="text-muted-foreground">Your design process probably isn't.</span>
             </h2>
           </motion.div>
 
