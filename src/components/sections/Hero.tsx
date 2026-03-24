@@ -141,7 +141,7 @@ const Hero = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="relative flex justify-center lg:justify-end"
           >
-            <div className="relative">
+            <div id="emotion-wheel" className="relative">
               {/* Floating glow behind wheel */}
               <div className="absolute inset-0 blur-[80px] opacity-30 animate-pulse-slow">
                 <div 

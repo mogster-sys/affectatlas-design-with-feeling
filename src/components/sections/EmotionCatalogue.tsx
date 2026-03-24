@@ -76,13 +76,14 @@ const EmotionCatalogue = () => {
             <p className="text-sm text-muted-foreground mb-6">Plutchik's foundational wheel</p>
             <div className="flex flex-wrap gap-2">
               {primaries.map((e) => (
-                <span
+                <button
                   key={e.name}
-                  className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium border border-border/50 bg-secondary/50"
+                  onClick={() => document.getElementById("emotion-wheel")?.scrollIntoView({ behavior: "smooth", block: "center" })}
+                  className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium border border-border/50 bg-secondary/50 hover:bg-primary/10 hover:border-primary/30 transition-colors cursor-pointer"
                 >
                   <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ background: e.color }} />
                   {e.name}
-                </span>
+                </button>
               ))}
             </div>
           </motion.div>
