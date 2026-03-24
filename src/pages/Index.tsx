@@ -2,6 +2,7 @@ import Hero from "@/components/sections/Hero";
 import Problem from "@/components/sections/Problem";
 import Solution from "@/components/sections/Solution";
 import Benefits from "@/components/sections/Benefits";
+import EmotionCatalogue from "@/components/sections/EmotionCatalogue";
 import Testimonials from "@/components/sections/Testimonials";
 import Process from "@/components/sections/Process";
 import Pricing from "@/components/sections/Pricing";
@@ -34,6 +35,7 @@ const Index = () => {
         <Problem />
         <Solution />
         <Benefits />
+        <EmotionCatalogue />
         <Testimonials />
         <Process />
         <Pricing />
