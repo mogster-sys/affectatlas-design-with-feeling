@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
-import { Lightbulb, BookOpen, Users, Shield } from "lucide-react";
+import { Lightbulb, BookOpen } from "lucide-react";
+import EmotionScreenShowcase from "@/components/EmotionScreenShowcase";
 
 const credentials = [
   { icon: BookOpen, text: "Backed by 40+ years of emotion research" },
@@ -63,75 +64,17 @@ const Solution = () => {
             </div>
           </motion.div>
 
-          {/* Right side - Visual representation */}
+          {/* Right side - Emotion screen showcase */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="relative"
           >
-            <div className="relative glass-card rounded-2xl p-8 lg:p-10 overflow-hidden">
-              {/* Gradient background */}
-              <div className="absolute inset-0 opacity-10">
-                <div 
-                  className="absolute inset-0"
-                  style={{
-                    background: "linear-gradient(135deg, hsl(45, 100%, 55%) 0%, hsl(122, 40%, 50%) 50%, hsl(207, 85%, 55%) 100%)",
-                  }}
-                />
-              </div>
-
-              <div className="relative z-10 space-y-8">
-                {/* Step visualization */}
-                <div className="space-y-6">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold text-lg">
-                      1
-                    </div>
-                    <div>
-                      <h4 className="font-display font-semibold mb-1">Choose your emotion</h4>
-                      <p className="text-sm text-muted-foreground">Select from 8 primary emotions</p>
-                    </div>
-                  </div>
-
-                  <div className="ml-6 pl-6 border-l-2 border-dashed border-border">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-full bg-accent/20 border-2 border-accent flex items-center justify-center text-accent font-bold text-lg">
-                        2
-                      </div>
-                      <div>
-                        <h4 className="font-display font-semibold mb-1">Consider the intensity</h4>
-                        <p className="text-sm text-muted-foreground">Adjust how strongly the emotion comes through</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="ml-6 pl-6 border-l-2 border-dashed border-border">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-full bg-emotion-trust/20 border-2 border-emotion-trust flex items-center justify-center text-emotion-trust font-bold text-lg">
-                        3
-                      </div>
-                      <div>
-                        <h4 className="font-display font-semibold mb-1">Blend for nuance</h4>
-                        <p className="text-sm text-muted-foreground">Joy + Trust = Love</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="ml-6 pl-6 border-l-2 border-dashed border-border">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-full bg-emotion-joy/20 border-2 border-emotion-joy flex items-center justify-center text-emotion-joy font-bold text-lg">
-                        4
-                      </div>
-                      <div>
-                        <h4 className="font-display font-semibold mb-1">Export everywhere</h4>
-                        <p className="text-sm text-muted-foreground">CSS, Tailwind, Figma, AI-friendly generator prompts, and more</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <EmotionScreenShowcase />
+            <p className="text-center text-sm text-muted-foreground mt-6">
+              Same app, different emotions — the design system transforms everything.
+            </p>
           </motion.div>
         </div>
       </div>
