@@ -1,11 +1,11 @@
 import { motion } from "framer-motion";
 import surpriseScreen from "@/assets/screens/surprise-screen.png";
-import fearScreen from "@/assets/screens/fear-screen.png";
+import trustScreen from "@/assets/screens/trust-screen.png";
 import angerScreen from "@/assets/screens/anger-screen.png";
 
 const screens = [
   { label: "Surprise", image: surpriseScreen, color: "hsl(var(--emotion-surprise))" },
-  { label: "Fear", image: fearScreen, color: "hsl(var(--emotion-fear))" },
+  { label: "Trust", image: trustScreen, color: "hsl(var(--emotion-trust))" },
   { label: "Anger", image: angerScreen, color: "hsl(var(--emotion-anger))" },
 ];
 
