@@ -51,7 +51,7 @@ const Hero = () => {
             >
               <Sparkles className="w-4 h-4 text-primary" />
               <span className="text-sm font-medium text-muted-foreground">
-                For designers who feel first
+                For designers with feelings
               </span>
             </motion.div>
 
@@ -62,8 +62,8 @@ const Hero = () => {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="font-display text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.1] tracking-tight mb-6"
             >
-              Design systems that{" "}
-              <span className="gradient-text">feel something.</span>
+              Design systems for{" "}
+              <span className="gradient-text">that feeling.</span>
             </motion.h1>
 
             {/* Sub-headline */}
@@ -73,9 +73,9 @@ const Hero = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-lg sm:text-xl text-muted-foreground max-w-xl mx-auto lg:mx-0 mb-8 text-balance"
             >
-              Generate complete, research-backed design systems from emotional intent. 
-              Colors, typography, spacing, motion — all tuned to make your users feel 
-              exactly what you want them to feel.
+              Generate design systems tuned to make your users feel what you want 
+              them to feel by matching your emotional intent to a research-backed 
+              design system.
             </motion.p>
 
             {/* CTA buttons */}
@@ -128,16 +128,9 @@ const Hero = () => {
               transition={{ duration: 0.6, delay: 0.5 }}
               className="mt-12 pt-8 border-t border-border/30"
             >
-              <p className="text-sm text-muted-foreground mb-4">
+              <p className="text-sm text-muted-foreground">
                 Trusted by designers at innovative teams
               </p>
-              <div className="flex items-center gap-8 justify-center lg:justify-start opacity-50">
-                {["Stripe", "Vercel", "Linear", "Notion"].map((company) => (
-                  <span key={company} className="font-display font-semibold text-lg">
-                    {company}
-                  </span>
-                ))}
-              </div>
             </motion.div>
           </div>
 

@@ -5,8 +5,6 @@ import { Lightbulb, BookOpen, Users, Shield } from "lucide-react";
 
 const credentials = [
   { icon: BookOpen, text: "Backed by 40+ years of emotion research" },
-  { icon: Users, text: "Used by 2,000+ designers worldwide" },
-  { icon: Shield, text: "Trusted by design teams at scale" },
 ];
 
 const Solution = () => {
@@ -102,8 +100,8 @@ const Solution = () => {
                         2
                       </div>
                       <div>
-                        <h4 className="font-display font-semibold mb-1">Dial in intensity</h4>
-                        <p className="text-sm text-muted-foreground">From ecstasy to serenity</p>
+                        <h4 className="font-display font-semibold mb-1">Consider the intensity</h4>
+                        <p className="text-sm text-muted-foreground">Adjust how strongly the emotion comes through</p>
                       </div>
                     </div>
                   </div>
@@ -127,7 +125,7 @@ const Solution = () => {
                       </div>
                       <div>
                         <h4 className="font-display font-semibold mb-1">Export everywhere</h4>
-                        <p className="text-sm text-muted-foreground">CSS, Tailwind, Figma, and more</p>
+                        <p className="text-sm text-muted-foreground">CSS, Tailwind, Figma, AI-friendly generator prompts, and more</p>
                       </div>
                     </div>
                   </div>

@@ -31,7 +31,7 @@ const benefits = [
     title: "Precision without the guesswork",
     description: "Know exactly why your design works. Every token maps back to psychology research you can reference and share.",
     features: [
-      "Research citations for every decision",
+      "Results that speak for themselves",
       "Shareable design rationale",
       "Consistent emotional language",
     ],
