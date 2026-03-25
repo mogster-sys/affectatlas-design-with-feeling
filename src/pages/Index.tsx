@@ -51,7 +51,7 @@ const Index = () => {
               <span className="font-display font-semibold">AffectAtlas</span>
             </div>
             <p className="text-sm text-muted-foreground">
-              Made with 💛 and research. © 2024 AffectAtlas.
+              Made with intention and research. © 2025–2026 AffectAtlas.
             </p>
           </div>
         </div>

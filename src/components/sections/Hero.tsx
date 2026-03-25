@@ -73,9 +73,9 @@ const Hero = () => {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-lg sm:text-xl text-muted-foreground max-w-xl mx-auto lg:mx-0 mb-8 text-balance"
             >
-              Generate design systems tuned to make your users feel what you want 
-              them to feel by matching your emotional intent to a research-backed 
-              design system.
+              Generate complete design advisories tuned to make your users feel what you want 
+              them to feel. 29 emotions, 11 design dimensions, 9 export formats — each backed 
+              by Plutchik's emotion research.
             </motion.p>
 
             {/* CTA buttons */}
@@ -129,7 +129,7 @@ const Hero = () => {
               className="mt-12 pt-8 border-t border-border/30"
             >
               <p className="text-sm text-muted-foreground">
-                Trusted by designers at innovative teams
+                Free to use. No account required.
               </p>
             </motion.div>
           </div>
@@ -147,7 +147,7 @@ const Hero = () => {
                 <div 
                   className="w-full h-full rounded-full"
                   style={{
-                    background: "conic-gradient(from 0deg, hsl(0, 80%, 55%), hsl(33, 100%, 50%), hsl(45, 100%, 55%), hsl(122, 40%, 50%), hsl(174, 65%, 40%), hsl(187, 100%, 48%), hsl(207, 85%, 55%), hsl(292, 60%, 45%), hsl(0, 80%, 55%))",
+                    background: "conic-gradient(from 0deg, hsl(4, 90%, 58%), hsl(33, 100%, 50%), hsl(48, 100%, 50%), hsl(88, 50%, 49%), hsl(232, 38%, 55%), hsl(199, 98%, 48%), hsl(291, 64%, 42%), hsl(16, 25%, 38%), hsl(4, 90%, 58%))",
                   }}
                 />
               </div>
