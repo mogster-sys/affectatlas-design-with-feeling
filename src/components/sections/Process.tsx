@@ -14,13 +14,13 @@ const steps = [
     number: "02", 
     icon: Cog,
     title: "We handle the complexity",
-    description: "Our engine maps your emotion to colors, typography, spacing, and motion — all research-backed.",
+    description: "Our engine maps your emotion across 11 design dimensions — colors, typography, spacing, motion, depth, shapes, layout, iconography, and rules — each backed by research from Plutchik's psychoevolutionary theory and curated by AI design tools.",
   },
   {
     number: "03",
     icon: Sparkles,
     title: "Export your design system",
-    description: "Download to CSS, Tailwind, Figma Tokens, or 10+ other formats. Start designing immediately.",
+    description: "Download to CSS, JSON, Tailwind, SCSS, Figma Tokens, Swift, Kotlin, W3C Design Tokens, or AI Prompt format. Start designing immediately.",
   },
 ];
 

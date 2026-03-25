@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
-import { Heart, Zap, Target } from "lucide-react";
+import { Heart, Zap, Target, Layers } from "lucide-react";
 
 const benefits = [
   {
@@ -16,24 +16,24 @@ const benefits = [
     color: "hsl(0, 80%, 55%)",
   },
   {
-    icon: Zap,
-    title: "Hours saved, confidence gained",
-    description: "Stop second-guessing every design decision. Get a complete, justified design system in minutes instead of days.",
+    icon: Layers,
+    title: "11 dimensions of design guidance",
+    description: "Every emotion comes with a deep design advisory — not just colors, but a complete creative direction across every aspect of your design system.",
     features: [
-      "Complete system in under 5 minutes",
-      "No more endless palette iterations",
-      "Built-in justification for every choice",
+      "Color tokens, typography specimens, spacing scales",
+      "Motion curves, depth, shapes, layout alignment",
+      "Iconography, do's and don'ts, emotional context",
     ],
     color: "hsl(45, 100%, 55%)",
   },
   {
-    icon: Target,
-    title: "Precision without the guesswork",
-    description: "Know exactly why your design works. Every token maps back to psychology research you can reference and share.",
+    icon: Zap,
+    title: "29 unique typographic identities",
+    description: "Each emotion has its own headline and body typeface, creating 29 distinct typographic identities from 58 Google Fonts. No two emotions look alike.",
     features: [
-      "Results that speak for themselves",
-      "Shareable design rationale",
-      "Consistent emotional language",
+      "29 curated font pairings",
+      "Research-backed type-emotion mapping",
+      "Complete system in under 5 minutes",
     ],
     color: "hsl(207, 85%, 55%)",
   },

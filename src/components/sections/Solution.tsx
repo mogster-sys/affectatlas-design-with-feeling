@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
-import { Lightbulb, BookOpen } from "lucide-react";
+import { Lightbulb, BookOpen, Heart } from "lucide-react";
 import EmotionScreenShowcase from "@/components/EmotionScreenShowcase";
 
 const credentials = [
@@ -48,6 +48,21 @@ const Solution = () => {
                 hoping they evoke the right emotion, you start with the emotion and 
                 let the design follow.
               </p>
+            </div>
+
+            {/* Love variants callout */}
+            <div className="glass-card rounded-xl p-5 mb-8">
+              <div className="flex items-start gap-3">
+                <Heart className="w-5 h-5 text-primary mt-0.5 shrink-0" />
+                <div>
+                  <p className="text-sm font-medium text-foreground mb-1">Some emotions run deeper</p>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    Love offers three variant advisories — Love, Passion, and Lust — each with 
+                    its own complete design system, showing how a single emotion can express itself 
+                    in radically different visual languages.
+                  </p>
+                </div>
+              </div>
             </div>
 
             {/* Credentials */}

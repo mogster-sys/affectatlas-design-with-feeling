@@ -1,14 +1,14 @@
 import { motion } from "framer-motion";
 
 const emotions = [
-  { name: "Anger", color: "hsl(0, 80%, 55%)", rotation: 0 },
+  { name: "Anger", color: "hsl(4, 90%, 58%)", rotation: 0 },
   { name: "Anticipation", color: "hsl(33, 100%, 50%)", rotation: 45 },
-  { name: "Joy", color: "hsl(45, 100%, 55%)", rotation: 90 },
-  { name: "Trust", color: "hsl(122, 40%, 50%)", rotation: 135 },
-  { name: "Sadness", color: "hsl(174, 65%, 40%)", rotation: 180 },
-  { name: "Surprise", color: "hsl(187, 100%, 48%)", rotation: 225 },
-  { name: "Fear", color: "hsl(207, 85%, 55%)", rotation: 270 },
-  { name: "Disgust", color: "hsl(292, 60%, 45%)", rotation: 315 },
+  { name: "Joy", color: "hsl(48, 100%, 50%)", rotation: 90 },
+  { name: "Trust", color: "hsl(88, 50%, 49%)", rotation: 135 },
+  { name: "Sadness", color: "hsl(232, 38%, 55%)", rotation: 180 },
+  { name: "Surprise", color: "hsl(199, 98%, 48%)", rotation: 225 },
+  { name: "Fear", color: "hsl(291, 64%, 42%)", rotation: 270 },
+  { name: "Disgust", color: "hsl(16, 25%, 38%)", rotation: 315 },
 ];
 
 interface EmotionWheelProps {
@@ -73,7 +73,6 @@ export const EmotionWheel = ({ size = 400, className = "", animated = true }: Em
         className="relative z-10"
       >
         <defs>
-          {/* Add gradient definitions for each segment */}
           {emotions.map((emotion, i) => (
             <radialGradient key={`grad-${i}`} id={`gradient-${i}`} cx="50%" cy="50%" r="50%">
               <stop offset="40%" stopColor={emotion.color} stopOpacity="1" />
@@ -81,7 +80,6 @@ export const EmotionWheel = ({ size = 400, className = "", animated = true }: Em
             </radialGradient>
           ))}
           
-          {/* Glow filter */}
           <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
             <feGaussianBlur stdDeviation="3" result="coloredBlur" />
             <feMerge>
@@ -91,7 +89,6 @@ export const EmotionWheel = ({ size = 400, className = "", animated = true }: Em
           </filter>
         </defs>
         
-        {/* Wheel segments */}
         <g filter="url(#glow)">
           {emotions.map((emotion, i) => {
             const startAngle = i * 45;
@@ -120,7 +117,6 @@ export const EmotionWheel = ({ size = 400, className = "", animated = true }: Em
           })}
         </g>
         
-        {/* Center circle */}
         <circle
           cx={center}
           cy={center}
@@ -130,7 +126,6 @@ export const EmotionWheel = ({ size = 400, className = "", animated = true }: Em
           strokeWidth="1"
         />
         
-        {/* Emotion labels */}
         {emotions.map((emotion, i) => {
           const pos = getLabelPosition(i * 45);
           const angle = i * 45 + 22.5;
