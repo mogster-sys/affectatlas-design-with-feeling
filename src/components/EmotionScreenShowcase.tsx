@@ -28,7 +28,7 @@ const EmotionScreenShowcase = ({ className = "" }: EmotionScreenShowcaseProps) =
           >
             {/* Screen container */}
             <div
-              className="relative rounded-xl overflow-hidden border border-border/50 shadow-lg group"
+              className="relative rounded-xl overflow-hidden border border-border/50 shadow-lg"
               style={{
                 boxShadow: `0 8px 32px -8px ${screen.color}20`,
               }}
