@@ -43,12 +43,12 @@ const EmotionScreenShowcase = ({ className = "" }: EmotionScreenShowcaseProps) =
                 <div className="w-2 h-2 rounded-full bg-muted-foreground/30" />
               </div>
 
-              {/* Screen image - scrollable preview with fixed max height */}
-              <div className="max-h-[420px] overflow-hidden">
+              {/* Screen image - user-scrollable preview */}
+              <div className="max-h-[420px] overflow-y-auto scrollbar-thin scrollbar-thumb-muted-foreground/30 scrollbar-track-transparent">
                 <img
                   src={screen.image}
                   alt={`${screen.label} emotion design system`}
-                  className="w-full h-auto transition-transform duration-[3s] ease-in-out group-hover:-translate-y-[30%]"
+                  className="w-full h-auto"
                   loading="lazy"
                 />
               </div>
