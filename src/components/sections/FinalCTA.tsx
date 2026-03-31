@@ -21,11 +21,13 @@ const FinalCTA = () => {
           <p className="text-xl text-muted-foreground mb-10">
             Start with the emotion. Let the design follow.
           </p>
-          <Button size="lg" className="text-lg px-10 py-7 glow-primary font-semibold group">
-            Try the wheel
-            <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          <Button size="lg" className="text-lg px-10 py-7 glow-primary font-semibold group" asChild>
+            <a href="#">
+              Get the app
+              <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </a>
           </Button>
-          <p className="text-sm text-muted-foreground mt-6">Free forever. No account required.</p>
+          <p className="text-sm text-muted-foreground mt-6">Free forever. All features. No account needed.</p>
         </motion.div>
       </div>
     </section>

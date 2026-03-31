@@ -14,7 +14,7 @@ const primaries = [
 ];
 
 const dyads = [
-  { name: "Love", blend: "Joy + Trust" },
+  { name: "Love", blend: "Joy + Trust", note: "3 variants: Love, Passion, Lust" },
   { name: "Submission", blend: "Trust + Fear" },
   { name: "Alarm", blend: "Fear + Surprise" },
   { name: "Disappointment", blend: "Surprise + Sadness" },
