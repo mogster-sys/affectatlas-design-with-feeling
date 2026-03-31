@@ -88,9 +88,12 @@ const Hero = () => {
               <Button 
                 size="lg" 
                 className="text-base px-8 py-6 glow-primary font-semibold group"
+                asChild
               >
-                Try the wheel
-                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                <a href="#">
+                  Get the app
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </a>
               </Button>
               <Button 
                 variant="outline" 

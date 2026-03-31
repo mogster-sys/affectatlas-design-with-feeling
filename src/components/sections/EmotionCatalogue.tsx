@@ -14,7 +14,7 @@ const primaries = [
 ];
 
 const dyads = [
-  { name: "Love", blend: "Joy + Trust" },
+  { name: "Love", blend: "Joy + Trust", note: "3 variants: Love, Passion, Lust" },
   { name: "Submission", blend: "Trust + Fear" },
   { name: "Alarm", blend: "Fear + Surprise" },
   { name: "Disappointment", blend: "Surprise + Sadness" },
@@ -99,9 +99,14 @@ const EmotionCatalogue = () => {
             <p className="text-sm text-muted-foreground mb-6">Two emotions, one feeling</p>
             <div className="space-y-2.5">
               {dyads.map((d) => (
-                <div key={d.name} className="flex items-center justify-between text-sm">
-                  <span className="font-medium">{d.name}</span>
-                  <span className="text-muted-foreground text-xs">{d.blend}</span>
+                <div key={d.name}>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="font-medium">{d.name}</span>
+                    <span className="text-muted-foreground text-xs">{d.blend}</span>
+                  </div>
+                  {"note" in d && d.note && (
+                    <p className="text-xs text-primary mt-0.5">{d.note}</p>
+                  )}
                 </div>
               ))}
             </div>

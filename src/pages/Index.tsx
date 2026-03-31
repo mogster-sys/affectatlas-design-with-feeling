@@ -3,9 +3,8 @@ import Problem from "@/components/sections/Problem";
 import Solution from "@/components/sections/Solution";
 import Benefits from "@/components/sections/Benefits";
 import EmotionCatalogue from "@/components/sections/EmotionCatalogue";
-import Testimonials from "@/components/sections/Testimonials";
+import DesignAdvisory from "@/components/sections/DesignAdvisory";
 import Process from "@/components/sections/Process";
-import Pricing from "@/components/sections/Pricing";
 import FinalCTA from "@/components/sections/FinalCTA";
 import logo from "@/assets/affectatlas-logo.png";
 
@@ -22,8 +21,7 @@ const Index = () => {
             </div>
             <div className="hidden md:flex items-center gap-8">
               <a href="#features" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Features</a>
-              <a href="#pricing" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Pricing</a>
-              <a href="#" className="text-sm font-medium text-primary hover:text-primary/80 transition-colors">Try the wheel →</a>
+              <a href="#" className="text-sm font-medium text-primary hover:text-primary/80 transition-colors">Get the app →</a>
             </div>
           </div>
         </div>
@@ -36,9 +34,8 @@ const Index = () => {
         <Solution />
         <Benefits />
         <EmotionCatalogue />
-        <Testimonials />
+        <DesignAdvisory />
         <Process />
-        <Pricing />
         <FinalCTA />
       </main>
 
@@ -51,7 +48,7 @@ const Index = () => {
               <span className="font-display font-semibold">AffectAtlas</span>
             </div>
             <p className="text-sm text-muted-foreground">
-              Made with intention and research. © 2025–2026 AffectAtlas.
+              © 2026 Three Eyed Emu. All rights reserved.
             </p>
           </div>
         </div>
