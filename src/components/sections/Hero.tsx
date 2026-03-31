@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import EmotionWheel from "@/components/EmotionWheel";
+import heroImage from "@/assets/affectatlas-logo.png";
 
 const checkmarks = [
   "Research-backed palettes",
@@ -131,28 +131,17 @@ const Hero = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="relative flex justify-center lg:justify-end"
           >
-            <div id="emotion-wheel" className="relative">
-              <div className="absolute inset-0 blur-[80px] opacity-30 animate-pulse-slow">
-                <div 
-                  className="w-full h-full rounded-full"
-                  style={{
-                    background: "conic-gradient(from 0deg, hsl(4, 90%, 58%), hsl(33, 100%, 50%), hsl(48, 100%, 50%), hsl(88, 50%, 49%), hsl(232, 38%, 55%), hsl(199, 98%, 48%), hsl(291, 64%, 42%), hsl(16, 25%, 38%), hsl(4, 90%, 58%))",
-                  }}
-                />
-              </div>
-              
-              <EmotionWheel size={420} className="relative z-10" />
-              
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1, duration: 0.5 }}
-                className="absolute -bottom-4 left-1/2 -translate-x-1/2 glass-card px-6 py-3 rounded-full"
-              >
-                <span className="text-sm font-medium">
-                  Select an emotion to begin
-                </span>
-              </motion.div>
+            <div className="relative">
+              <div className="absolute inset-0 blur-[60px] opacity-25 animate-pulse-slow rounded-full"
+                style={{
+                  background: "conic-gradient(from 0deg, hsl(4, 90%, 58%), hsl(33, 100%, 50%), hsl(48, 100%, 50%), hsl(88, 50%, 49%), hsl(232, 38%, 55%), hsl(199, 98%, 48%), hsl(291, 64%, 42%), hsl(16, 25%, 38%), hsl(4, 90%, 58%))",
+                }}
+              />
+              <img 
+                src={heroImage} 
+                alt="AffectAtlas — Emotion wheel with flowing design ribbons" 
+                className="relative z-10 w-full max-w-[480px] h-auto drop-shadow-2xl"
+              />
             </div>
           </motion.div>
         </div>
