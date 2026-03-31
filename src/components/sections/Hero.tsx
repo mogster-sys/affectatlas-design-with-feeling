@@ -83,8 +83,8 @@ const Hero = () => {
                 className="text-base px-8 py-6 glow-primary font-semibold group"
                 asChild
               >
-                <a href="#">
-                  Get the app
+                <a href="https://play.google.com/store" target="_blank" rel="noopener noreferrer">
+                  Coming to Google Play
                   <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </a>
               </Button>
@@ -92,8 +92,9 @@ const Hero = () => {
                 variant="outline" 
                 size="lg" 
                 className="text-base px-8 py-6 border-border/50 hover:bg-secondary/50"
+                asChild
               >
-                See how it works
+                <a href="#features">See how it works</a>
               </Button>
             </motion.div>
 

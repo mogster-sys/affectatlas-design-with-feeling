@@ -22,8 +22,8 @@ const FinalCTA = () => {
             Start with the emotion. Let the design follow.
           </p>
           <Button size="lg" className="text-lg px-10 py-7 glow-primary font-semibold group" asChild>
-            <a href="#">
-              Get the app
+            <a href="https://play.google.com/store" target="_blank" rel="noopener noreferrer">
+              Coming to Google Play
               <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </a>
           </Button>
