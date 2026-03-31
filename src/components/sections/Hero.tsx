@@ -92,8 +92,9 @@ const Hero = () => {
                 variant="outline" 
                 size="lg" 
                 className="text-base px-8 py-6 border-border/50 hover:bg-secondary/50"
+                asChild
               >
-                See how it works
+                <a href="#features">See how it works</a>
               </Button>
             </motion.div>
 

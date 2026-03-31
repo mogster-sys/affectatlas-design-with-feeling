@@ -21,7 +21,7 @@ const Index = () => {
             </div>
             <div className="hidden md:flex items-center gap-8">
               <a href="#features" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Features</a>
-              <a href="#" className="text-sm font-medium text-primary hover:text-primary/80 transition-colors">Get the app →</a>
+              <a href="https://play.google.com/store" target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-primary hover:text-primary/80 transition-colors">Coming to Google Play →</a>
             </div>
           </div>
         </div>
