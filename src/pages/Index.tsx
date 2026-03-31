@@ -48,7 +48,7 @@ const Index = () => {
               <span className="font-display font-semibold">AffectAtlas</span>
             </div>
             <p className="text-sm text-muted-foreground">
-              © 2026 Three Eyed Emu. All rights reserved.
+              © 2026 Three Eyed Emu. All rights reserved. · <a href="https://mogster-sys.github.io/affectatlas-privacy/" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors underline">Privacy Policy</a>
             </p>
           </div>
         </div>
