@@ -20,7 +20,7 @@ const steps = [
     number: "03",
     icon: Sparkles,
     title: "Export your design system",
-    description: "Download to CSS, JSON, Tailwind, SCSS, Figma Tokens, Swift, Kotlin, W3C Design Tokens, or AI Prompt format. Start designing immediately.",
+    description: "Export to CSS, Tailwind, Figma Tokens, and 6 other formats — Swift, Kotlin, SCSS, JSON, W3C Design Tokens, and AI Prompt. Start designing immediately.",
   },
 ];
 
