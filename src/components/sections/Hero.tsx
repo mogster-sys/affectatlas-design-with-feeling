@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import heroImage from "@/assets/affectatlas-logo.png";
+import heroVisual from "@/assets/hero-visual.png";
 
 const checkmarks = [
   "Research-backed palettes",
