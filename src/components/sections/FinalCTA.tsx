@@ -27,7 +27,7 @@ const FinalCTA = () => {
               <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </a>
           </Button>
-          <p className="text-sm text-muted-foreground mt-6">Free forever. All features. No account needed.</p>
+          <p className="text-sm text-muted-foreground mt-6">Free to explore. Exports unlock with a one-time purchase.</p>
         </motion.div>
       </div>
     </section>
