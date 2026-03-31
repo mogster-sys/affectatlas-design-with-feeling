@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import heroImage from "@/assets/affectatlas-logo.png";
+import heroVisual from "@/assets/hero-visual.png";
 
 const checkmarks = [
   "Research-backed palettes",
@@ -138,9 +138,9 @@ const Hero = () => {
                 }}
               />
               <img 
-                src={heroImage} 
+                src={heroVisual} 
                 alt="AffectAtlas — Emotion wheel with flowing design ribbons" 
-                className="relative z-10 w-full max-w-[480px] h-auto drop-shadow-2xl"
+                className="relative z-10 w-full max-w-[520px] h-auto drop-shadow-2xl"
               />
             </div>
           </motion.div>
