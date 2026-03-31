@@ -138,9 +138,9 @@ const Hero = () => {
                 }}
               />
               <img 
-                src={heroImage} 
+                src={heroVisual} 
                 alt="AffectAtlas — Emotion wheel with flowing design ribbons" 
-                className="relative z-10 w-full max-w-[480px] h-auto drop-shadow-2xl"
+                className="relative z-10 w-full max-w-[520px] h-auto drop-shadow-2xl"
               />
             </div>
           </motion.div>
