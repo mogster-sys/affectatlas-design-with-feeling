@@ -5,6 +5,7 @@ import Solution from "@/components/sections/Solution";
 import Benefits from "@/components/sections/Benefits";
 import EmotionCatalogue from "@/components/sections/EmotionCatalogue";
 import DesignAdvisory from "@/components/sections/DesignAdvisory";
+import ExportShowcase from "@/components/sections/ExportShowcase";
 import Process from "@/components/sections/Process";
 import FinalCTA from "@/components/sections/FinalCTA";
 import JourneyBackground from "@/components/JourneyBackground";
@@ -126,6 +127,7 @@ const Index = () => {
           <Benefits />
           <EmotionCatalogue />
           <DesignAdvisory />
+          <ExportShowcase />
           <Process />
           <FinalCTA />
         </main>

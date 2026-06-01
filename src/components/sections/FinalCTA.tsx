@@ -36,7 +36,7 @@ const FinalCTA = () => {
         <Reveal>
           <p className="label mb-10 flex items-center justify-center gap-3 text-muted-foreground">
             <span className="h-px w-10 bg-current opacity-50" />
-            Plate Nº 07 — Begin
+            Plate Nº 08 — Begin
             <span className="h-px w-10 bg-current opacity-50" />
           </p>
         </Reveal>

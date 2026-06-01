@@ -3,6 +3,8 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import EmotionWheel from "@/components/EmotionWheel";
 import { EMOTIONS, PRIMARIES, type EmotionKey } from "@/lib/emotions";
 import { useActiveEmotion } from "@/lib/active-emotion";
+import { EMOTION_EXPORTS } from "@/data/emotion-exports";
+import { FORMAT_LIST } from "@/lib/export-formats";
 
 const PLAY_URL = "https://play.google.com/store/apps/details?id=com.mogster.affectatlas";
 
@@ -14,16 +16,28 @@ const Hero = () => {
   const reduce = useReducedMotion();
   const { key: activeKey, setKey: setActiveKey } = useActiveEmotion();
   const [paused, setPaused] = useState(false);
+  const [visible, setVisible] = useState(true);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  // Only cycle while the hero is on screen, so the nav + export section don't
+  // shift under the reader once they've scrolled past.
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting), { threshold: 0.2 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   // The wheel is the source of truth: it auto-advances and re-themes the stage.
   useEffect(() => {
-    if (reduce || paused) return;
+    if (reduce || paused || !visible) return;
     const id = setInterval(() => {
       const idx = PRIMARIES.findIndex((p) => p.key === activeKey);
       setActiveKey(PRIMARIES[(idx + 1) % PRIMARIES.length].key);
     }, 2800);
     return () => clearInterval(id);
-  }, [reduce, paused, activeKey, setActiveKey]);
+  }, [reduce, paused, visible, activeKey, setActiveKey]);
 
   const e = EMOTIONS[activeKey];
 
@@ -73,6 +87,7 @@ const Hero = () => {
 
   return (
     <section
+      ref={sectionRef}
       data-emotion={activeKey}
       className="relative flex min-h-[100svh] items-center overflow-hidden pt-28"
       style={{
@@ -184,6 +199,14 @@ const Hero = () => {
           >
             Free to explore · {e.font} + {e.levels.join(" / ")}
           </p>
+
+          {/* Export teaser: real, familiar output that changes with the wheel. */}
+          <div aria-hidden style={{ marginTop: "var(--space-xl, 2rem)" }}>
+            <p className="label opacity-50">Exports → {FORMAT_LIST.join(" · ")}</p>
+            <code className="font-label mt-2 block text-[0.7rem] leading-relaxed opacity-30">
+              --color-primary: {EMOTION_EXPORTS[activeKey]?.colors.primary}; --font-headline: "{e.font}"; --radius: {EMOTION_EXPORTS[activeKey]?.radius};
+            </code>
+          </div>
         </div>
 
         {/* Right: the interactive wheel drives it all */}

@@ -29,7 +29,7 @@ const Process = () => {
         <Reveal>
           <p className="label mb-8 flex items-center gap-3 text-muted-foreground">
             <span className="h-px w-10 bg-current opacity-50" />
-            Plate Nº 06 — How it works
+            Plate Nº 07 — How it works
           </p>
         </Reveal>
         <Reveal delay={0.05}>
