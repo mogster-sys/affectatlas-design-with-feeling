@@ -118,9 +118,8 @@ export const EmotionWheel = ({ activeKey, onHover, size = 460, className = "" }:
                 <text
                   x={lab.x} y={lab.y}
                   textAnchor="middle" dominantBaseline="middle"
-                  fontFamily="'Spline Sans Mono', monospace"
                   fontSize={size * 0.026}
-                  style={{ fill: "currentColor" }}
+                  style={{ fill: "currentColor", fontFamily: "var(--font-body, 'Spline Sans Mono')" }}
                 >
                   {name}
                 </text>
@@ -140,13 +139,13 @@ export const EmotionWheel = ({ activeKey, onHover, size = 460, className = "" }:
               key={e.key}
               x={p.x} y={p.y}
               textAnchor={anchor} dominantBaseline="middle"
-              fontFamily="'Spline Sans Mono', monospace"
               fontSize={size * 0.029}
               letterSpacing="0.08em"
               style={{
                 fill: isActive ? e.ink : "currentColor",
                 opacity: isActive ? 1 : 0.5,
                 fontWeight: isActive ? 700 : 500,
+                fontFamily: "var(--font-body, 'Spline Sans Mono')",
                 textTransform: "uppercase",
                 transition: "fill .3s ease, opacity .3s ease",
                 pointerEvents: "none",
@@ -163,13 +162,13 @@ export const EmotionWheel = ({ activeKey, onHover, size = 460, className = "" }:
 
       {/* hub legend: the active emotion's three intensities */}
       <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-1 text-center">
-        <span className="label" style={{ fontSize: size * 0.023, color: active.ink, opacity: 0.9 }}>
+        <span className="label" style={{ fontSize: size * 0.023, color: active.ink, opacity: 0.9, fontFamily: "var(--font-body)" }}>
           {active.levels[2]}
         </span>
-        <span className="label font-display font-bold tracking-tight" style={{ fontSize: size * 0.05, letterSpacing: "0.02em", color: "currentColor" }}>
+        <span className="font-bold" style={{ fontSize: size * 0.052, lineHeight: 1, color: "currentColor", fontFamily: "var(--font-headline)", letterSpacing: "var(--tracking-headline, 0)" }}>
           {active.levels[1]}
         </span>
-        <span className="label" style={{ fontSize: size * 0.023, color: "currentColor", opacity: 0.6 }}>
+        <span className="label" style={{ fontSize: size * 0.023, color: "currentColor", opacity: 0.6, fontFamily: "var(--font-body)" }}>
           {active.levels[0]}
         </span>
       </div>

@@ -80,19 +80,29 @@ const Hero = () => {
         background: "var(--color-surface)",
         color: "var(--color-on-surface)",
         paddingBottom: "var(--space-xl, 2rem)",
+        // Each emotion arrives in its own motion character (Anger slams, Sadness drifts).
         transition:
-          "background-color .8s var(--motion-easing, ease), color .8s var(--motion-easing, ease)",
+          "background-color calc(var(--motion-duration, 350ms) + 250ms) var(--motion-easing, ease), color calc(var(--motion-duration, 350ms) + 250ms) var(--motion-easing, ease)",
       }}
     >
       <div className="atlas grid w-full items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10">
         {/* Left: headline, re-themed live to the active emotion's real system */}
         <div style={{ fontFamily: "var(--font-body)" }}>
-          <p className="label mb-7 flex items-center gap-3 opacity-70">
+          <p
+            className="label flex items-center gap-3 opacity-70"
+            style={{ fontFamily: "var(--font-body)", marginBottom: "var(--space-xl, 2rem)" }}
+          >
             <span className="h-px w-10 bg-current opacity-50" />
             {e.name} · {e.northStar}
           </p>
 
-          <h1 style={{ fontFamily: "var(--font-headline)", letterSpacing: "var(--tracking-headline, -0.02em)" }}>
+          <h1
+            style={{
+              fontFamily: "var(--font-headline)",
+              letterSpacing: "var(--tracking-headline, -0.02em)",
+              lineHeight: "var(--leading-headline, 1.05)",
+            }}
+          >
             <motion.span
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
@@ -111,7 +121,7 @@ const Hero = () => {
                   exit={reduce ? undefined : { opacity: 0, y: -22 }}
                   transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
                   className="absolute left-0 top-0 whitespace-nowrap font-extrabold leading-[0.84]"
-                  style={{ color: "var(--color-primary)", fontFamily: "var(--font-headline)", fontSize: `${size}px` }}
+                  style={{ color: "var(--color-primary)", fontFamily: "var(--font-headline)", fontSize: `${size}px`, letterSpacing: "var(--tracking-headline, -0.02em)" }}
                 >
                   {e.name.toLowerCase()}.
                 </motion.span>
@@ -120,7 +130,7 @@ const Hero = () => {
                 ref={measureRef}
                 aria-hidden
                 className="pointer-events-none invisible absolute whitespace-nowrap font-extrabold"
-                style={{ fontFamily: "var(--font-headline)", fontSize: `${BASE}px`, left: -99999, top: 0 }}
+                style={{ fontFamily: "var(--font-headline)", fontSize: `${BASE}px`, letterSpacing: "var(--tracking-headline, -0.02em)", left: -99999, top: 0 }}
               >
                 {e.name.toLowerCase()}.
               </span>
@@ -128,14 +138,22 @@ const Hero = () => {
           </h1>
 
           <p
-            className="mt-6 max-w-lg text-pretty text-lg opacity-80"
-            style={{ fontFamily: "var(--font-body)", lineHeight: "var(--leading-body, 1.6)" }}
+            className="max-w-lg text-pretty text-lg opacity-80"
+            style={{
+              fontFamily: "var(--font-body)",
+              lineHeight: "var(--leading-body, 1.6)",
+              letterSpacing: "var(--tracking-body, 0)",
+              marginTop: "var(--space-lg, 1.5rem)",
+            }}
           >
             AffectAtlas couples Plutchik's emotion wheel to a full design engine. Pick a feeling and
             the whole system follows, surface, type, colour, spacing, and motion. This page is the demo.
           </p>
 
-          <div className="mt-8 flex flex-wrap items-center gap-4">
+          <div
+            className="flex flex-wrap items-center"
+            style={{ marginTop: "var(--space-xl, 2rem)", gap: "var(--space-md, 1rem)" }}
+          >
             <a
               href={PLAY_URL}
               target="_blank"
@@ -161,7 +179,12 @@ const Hero = () => {
             </a>
           </div>
 
-          <p className="label mt-6 opacity-60">Free to explore · {e.font} + {e.levels.join(" / ")}</p>
+          <p
+            className="label opacity-60"
+            style={{ fontFamily: "var(--font-body)", marginTop: "var(--space-lg, 1.5rem)" }}
+          >
+            Free to explore · {e.font} + {e.levels.join(" / ")}
+          </p>
         </div>
 
         {/* Right: the interactive wheel drives it all */}
@@ -173,7 +196,9 @@ const Hero = () => {
           className="flex flex-col items-center"
         >
           <EmotionWheel activeKey={activeKey} onHover={handleHover} size={wheelSize} />
-          <p className="label mt-6 text-center opacity-70">Plutchik's wheel · hover a petal to explore</p>
+          <p className="label mt-6 text-center opacity-70" style={{ fontFamily: "var(--font-body)" }}>
+            Plutchik's wheel · hover a petal to explore
+          </p>
         </motion.div>
       </div>
 
