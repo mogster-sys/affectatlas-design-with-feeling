@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import EmotionWheel from "@/components/EmotionWheel";
 import { EMOTIONS, PRIMARIES, type EmotionKey } from "@/lib/emotions";
+import { useActiveEmotion } from "@/lib/active-emotion";
 
 const PLAY_URL = "https://play.google.com/store/apps/details?id=com.mogster.affectatlas";
 
@@ -11,20 +12,18 @@ const MIN_PX = 44;
 
 const Hero = () => {
   const reduce = useReducedMotion();
-  const [activeKey, setActiveKey] = useState<EmotionKey>("joy");
+  const { key: activeKey, setKey: setActiveKey } = useActiveEmotion();
   const [paused, setPaused] = useState(false);
 
   // The wheel is the source of truth: it auto-advances and re-themes the stage.
   useEffect(() => {
     if (reduce || paused) return;
     const id = setInterval(() => {
-      setActiveKey((k) => {
-        const idx = PRIMARIES.findIndex((p) => p.key === k);
-        return PRIMARIES[(idx + 1) % PRIMARIES.length].key;
-      });
+      const idx = PRIMARIES.findIndex((p) => p.key === activeKey);
+      setActiveKey(PRIMARIES[(idx + 1) % PRIMARIES.length].key);
     }, 2800);
     return () => clearInterval(id);
-  }, [reduce, paused]);
+  }, [reduce, paused, activeKey, setActiveKey]);
 
   const e = EMOTIONS[activeKey];
 

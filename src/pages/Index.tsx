@@ -9,11 +9,13 @@ import Process from "@/components/sections/Process";
 import FinalCTA from "@/components/sections/FinalCTA";
 import JourneyBackground from "@/components/JourneyBackground";
 import { PRIMARIES } from "@/lib/emotions";
+import { ActiveEmotionProvider, useActiveEmotion } from "@/lib/active-emotion";
 
 const PLAY_URL = "https://play.google.com/store/apps/details?id=com.mogster.affectatlas";
 
 const Nav = () => {
   const [scrolled, setScrolled] = useState(false);
+  const { key } = useActiveEmotion();
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
     onScroll();
@@ -22,7 +24,7 @@ const Nav = () => {
   }, []);
 
   return (
-    <nav className="fixed inset-x-0 top-0 z-50 text-foreground">
+    <nav data-emotion={key} className="fixed inset-x-0 top-0 z-50 text-foreground">
       <div
         className={`absolute inset-0 transition-colors duration-500 ${
           scrolled
@@ -41,14 +43,19 @@ const Nav = () => {
               />
             ))}
           </span>
-          <span className="font-display text-[1.05rem] font-extrabold tracking-tight">AffectAtlas</span>
+          <span
+            className="text-[1.05rem] font-extrabold tracking-tight"
+            style={{ fontFamily: "var(--font-headline)" }}
+          >
+            AffectAtlas
+          </span>
         </a>
 
-        <div className="flex items-center gap-7">
-          <a href="#catalogue" className="label hidden text-muted-foreground transition-colors hover:text-foreground sm:inline">
+        <div className="flex items-center gap-7" style={{ fontFamily: "var(--font-body)" }}>
+          <a href="#catalogue" className="label hidden text-muted-foreground transition-colors hover:text-foreground sm:inline" style={{ fontFamily: "var(--font-body)" }}>
             The atlas
           </a>
-          <a href="#process" className="label hidden text-muted-foreground transition-colors hover:text-foreground sm:inline">
+          <a href="#process" className="label hidden text-muted-foreground transition-colors hover:text-foreground sm:inline" style={{ fontFamily: "var(--font-body)" }}>
             How it works
           </a>
           <a
@@ -108,21 +115,23 @@ const Footer = () => (
 
 const Index = () => {
   return (
-    <div id="top" className="relative min-h-screen">
-      <JourneyBackground />
-      <Nav />
-      <main>
-        <Hero />
-        <Problem />
-        <Solution />
-        <Benefits />
-        <EmotionCatalogue />
-        <DesignAdvisory />
-        <Process />
-        <FinalCTA />
-      </main>
-      <Footer />
-    </div>
+    <ActiveEmotionProvider>
+      <div id="top" className="relative min-h-screen">
+        <JourneyBackground />
+        <Nav />
+        <main>
+          <Hero />
+          <Problem />
+          <Solution />
+          <Benefits />
+          <EmotionCatalogue />
+          <DesignAdvisory />
+          <Process />
+          <FinalCTA />
+        </main>
+        <Footer />
+      </div>
+    </ActiveEmotionProvider>
   );
 };
 
