@@ -1,82 +1,122 @@
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
-import { useRef } from "react";
-import { Compass, Type, Palette, Move, Box, Layout, Pen, ShieldCheck, BookOpen, Layers, MessageSquare } from "lucide-react";
+import Reveal from "@/components/Reveal";
+import { EMOTIONS } from "@/lib/emotions";
 
 const dimensions = [
-  { icon: Palette, label: "Color tokens" },
-  { icon: Type, label: "Typography specimens" },
-  { icon: Layout, label: "Spacing scales" },
-  { icon: Move, label: "Motion curves" },
-  { icon: Layers, label: "Depth & shadow" },
-  { icon: Box, label: "Shape rules" },
-  { icon: Layout, label: "Layout alignment" },
-  { icon: Pen, label: "Iconography" },
-  { icon: ShieldCheck, label: "Do's & don'ts" },
-  { icon: MessageSquare, label: "Word clouds" },
-  { icon: BookOpen, label: "Emotional context" },
+  "Colour tokens",
+  "Typography specimens",
+  "Spacing scale",
+  "Motion curves",
+  "Depth & shadow",
+  "Shape language",
+  "Layout & alignment",
+  "Iconography",
+  "Do's & don'ts",
+  "Word clouds",
+  "Emotional context",
+];
+
+const ant = EMOTIONS.anticipation;
+const swatches = [
+  "oklch(0.74 0.18 58)",
+  "oklch(0.62 0.17 48)",
+  "oklch(0.85 0.12 75)",
+  "oklch(0.50 0.13 42)",
+  "oklch(0.93 0.06 82)",
 ];
 
 const DesignAdvisory = () => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
   return (
-    <section ref={ref} className="relative py-24 lg:py-32 overflow-hidden bg-card/30">
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-border to-transparent" />
-
-      <div className="section-container">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center max-w-3xl mx-auto mb-16"
-        >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6">
-            <Compass className="w-4 h-4 text-primary" />
-            <span className="text-sm font-medium text-primary">Deep guidance</span>
-          </div>
-
-          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 tracking-tight">
-            Not just tokens. <span className="gradient-text">Design advisory.</span>
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Every emotion includes a deep design advisory — not just colors, but 11 dimensions 
-            of design guidance. 29 emotions, 3 intensities each, 87 complete design guidance 
-            entries backed by emotion research.
+    <section id="advisory" className="relative py-28 lg:py-40">
+      <div className="atlas">
+        <Reveal>
+          <p className="label mb-8 flex items-center gap-3" style={{ color: ant.inkVar }}>
+            <span className="h-px w-10" style={{ background: ant.inkVar }} />
+            Plate Nº 05 — Deep guidance
           </p>
-        </motion.div>
+        </Reveal>
+        <Reveal delay={0.05}>
+          <h2 className="max-w-3xl font-display text-[clamp(2rem,4.6vw,3.75rem)] font-extrabold leading-[1.0]">
+            Not just tokens. A complete{" "}
+            <span style={{ color: ant.inkVar }}>design advisory.</span>
+          </h2>
+        </Reveal>
+        <Reveal delay={0.1}>
+          <p className="mt-6 max-w-2xl text-pretty text-lg text-foreground/70">
+            Every emotion carries eleven dimensions of guidance, at three intensities, for
+            eighty-seven complete advisory entries. This is one of them.
+          </p>
+        </Reveal>
 
-        {/* Dimensions grid */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 max-w-4xl mx-auto"
-        >
-          {dimensions.map((dim, i) => (
-            <motion.div
-              key={dim.label}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ duration: 0.4, delay: 0.05 * i }}
-              className="glass-card rounded-xl p-5 flex flex-col items-center gap-3 text-center"
-            >
-              <dim.icon className="w-5 h-5 text-primary" />
-              <span className="text-sm font-medium">{dim.label}</span>
-            </motion.div>
-          ))}
-        </motion.div>
+        <div className="mt-16 grid gap-12 lg:grid-cols-[0.85fr_1.15fr]">
+          {/* The eleven dimensions as an atlas index */}
+          <Reveal delay={0.1}>
+            <p className="label mb-2 text-muted-foreground/70">Eleven dimensions</p>
+            <ol>
+              {dimensions.map((d, idx) => (
+                <li
+                  key={d}
+                  className="flex items-baseline gap-4 border-b border-border/50 py-3 last:border-b-0"
+                >
+                  <span className="label w-6 shrink-0 text-muted-foreground/60">{String(idx + 1).padStart(2, "0")}</span>
+                  <span className="font-display text-lg font-semibold">{d}</span>
+                </li>
+              ))}
+            </ol>
+          </Reveal>
 
-        {/* Bottom stat */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="text-center text-sm text-muted-foreground mt-10"
-        >
-          Each advisory includes typography rationale, color philosophy, spacing approach, motion character, and contextual do/don't rules.
-        </motion.p>
+          {/* A real, filled-in advisory specimen */}
+          <Reveal delay={0.18}>
+            <figure className="plate overflow-hidden" style={{ borderColor: `color-mix(in oklab, ${ant.inkVar} 30%, transparent)` }}>
+              <figcaption className="flex items-center justify-between border-b border-border/60 px-6 py-4">
+                <span className="font-display text-lg font-bold">Advisory — Anticipation</span>
+                <span className="label text-muted-foreground">medium intensity</span>
+              </figcaption>
+
+              <div className="grid gap-px bg-border/50 sm:grid-cols-2">
+                {/* Colour */}
+                <div className="bg-[hsl(var(--background-elevated))] p-6">
+                  <p className="label mb-3 text-muted-foreground/70">Colour</p>
+                  <div className="flex gap-1.5">
+                    {swatches.map((c) => (
+                      <div key={c} className="h-10 flex-1 rounded-sm" style={{ background: c }} />
+                    ))}
+                  </div>
+                </div>
+
+                {/* Type */}
+                <div className="bg-[hsl(var(--background-elevated))] p-6">
+                  <p className="label mb-3 text-muted-foreground/70">Type — {ant.font}</p>
+                  <p className={`${ant.fontClass} text-4xl leading-none`} style={{ color: ant.inkVar }}>
+                    Forward
+                  </p>
+                </div>
+
+                {/* Motion */}
+                <div className="bg-[hsl(var(--background-elevated))] p-6">
+                  <p className="label mb-3 text-muted-foreground/70">Motion — eager, ease-out</p>
+                  <svg viewBox="0 0 100 44" className="h-12 w-full" preserveAspectRatio="none" aria-hidden>
+                    <path d="M0 44 C 8 6, 34 0, 100 0" fill="none" stroke={ant.inkVar} strokeWidth="2.5" strokeLinecap="round" />
+                  </svg>
+                </div>
+
+                {/* Do / Don't */}
+                <div className="bg-[hsl(var(--background-elevated))] p-6">
+                  <p className="label mb-3 text-muted-foreground/70">Do · Don't</p>
+                  <p className="text-sm text-foreground/80">
+                    <span style={{ color: ant.inkVar }}>Do</span> lead the eye with rising motion and warm light.
+                  </p>
+                  <p className="mt-1.5 text-sm text-muted-foreground">
+                    <span className="text-muted-foreground/80">Don't</span> let it settle, or anticipation reads as calm.
+                  </p>
+                </div>
+              </div>
+
+              <p className="border-t border-border/60 px-6 py-4 text-sm text-muted-foreground">
+                Plus spacing, depth, shape, layout, iconography, word clouds, and emotional context.
+              </p>
+            </figure>
+          </Reveal>
+        </div>
       </div>
     </section>
   );

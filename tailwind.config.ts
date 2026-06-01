@@ -14,8 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        display: ['Instrument Sans', 'system-ui', 'sans-serif'],
+        sans: ['Hanken Grotesk', 'system-ui', 'sans-serif'],
+        display: ['Bricolage Grotesque', 'system-ui', 'sans-serif'],
+        label: ['Spline Sans Mono', 'ui-monospace', 'monospace'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -72,6 +73,17 @@ export default {
           fear: "hsl(var(--emotion-fear))",
           disgust: "hsl(var(--emotion-disgust))",
         },
+        // Vivid emotion inks (OKLCH) — the working brand palette
+        ink: {
+          joy: "var(--e-joy)",
+          trust: "var(--e-trust)",
+          fear: "var(--e-fear)",
+          surprise: "var(--e-surprise)",
+          sadness: "var(--e-sadness)",
+          disgust: "var(--e-disgust)",
+          anger: "var(--e-anger)",
+          anticipation: "var(--e-anticipation)",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -117,6 +129,14 @@ export default {
           "0%, 100%": { transform: "translateY(0px)" },
           "50%": { transform: "translateY(-20px)" },
         },
+        marquee: {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(-50%)" },
+        },
+        drift: {
+          "0%, 100%": { transform: "translate3d(0,0,0)" },
+          "50%": { transform: "translate3d(0,-14px,0)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -128,6 +148,8 @@ export default {
         "pulse-glow": "pulse-glow 3s ease-in-out infinite",
         shimmer: "shimmer 2s linear infinite",
         float: "float 6s ease-in-out infinite",
+        marquee: "marquee 40s linear infinite",
+        drift: "drift 9s ease-in-out infinite",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

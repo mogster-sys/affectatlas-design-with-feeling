@@ -1,99 +1,97 @@
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
-import { useRef } from "react";
-import { AlertCircle, Palette, Type, Move, Zap } from "lucide-react";
+import Reveal from "@/components/Reveal";
 
 const painPoints = [
-  {
-    icon: Palette,
-    text: "Color palettes generated from a single hex, with no emotional coherence",
-  },
-  {
-    icon: Type,
-    text: "Typography pairings based on looks, not on what feels right together",
-  },
-  {
-    icon: Move,
-    text: "Spacing systems that are mathematically perfect but emotionally arbitrary",
-  },
-  {
-    icon: Zap,
-    text: "Motion that is smooth but soulless — technically correct, emotionally empty",
-  },
+  "Colour palettes generated from a single hex, with no emotional coherence.",
+  "Type pairings chosen for how they look, not for what they make people feel.",
+  "Spacing systems that are mathematically perfect and emotionally arbitrary.",
+  "Motion that is smooth but soulless: technically correct, feeling absent.",
 ];
 
+// A deliberately lifeless specimen — the colour has drained out of the design.
+const deadSwatches = ["hsl(36 4% 22%)", "hsl(36 4% 32%)", "hsl(36 4% 42%)", "hsl(36 3% 54%)", "hsl(36 3% 66%)"];
+
 const Problem = () => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
   return (
-    <section ref={ref} className="relative py-24 lg:py-32 overflow-hidden">
-      {/* Background accent */}
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-border to-transparent" />
-      
-      <div className="section-container">
-        <div className="max-w-4xl mx-auto">
-          {/* Section header */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-destructive/10 border border-destructive/20 mb-6">
-              <AlertCircle className="w-4 h-4 text-destructive" />
-              <span className="text-sm font-medium text-destructive">The problem</span>
-            </div>
-            
-            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 tracking-tight">
-              People are emotional.{" "}
-              <span className="text-muted-foreground">Your design process probably isn't.</span>
-            </h2>
-          </motion.div>
+    <section id="problem" className="relative py-28 lg:py-40">
+      <div className="atlas">
+        <div className="grid gap-16 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
+          <div>
+            <Reveal>
+              <p className="label mb-8 flex items-center gap-3 text-muted-foreground">
+                <span className="h-px w-10 bg-current opacity-50" />
+                Plate Nº 01 — The problem
+              </p>
+            </Reveal>
 
-          {/* Problem narrative */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="glass-card rounded-2xl p-8 lg:p-12 mb-12"
-          >
-            <div className="prose prose-lg prose-invert max-w-none">
-              <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                You have felt it before. A design that looks "correct" but feels wrong. 
-                Colors that pass accessibility checks but do not connect. A UI that is 
-                usable but forgettable.
-              </p>
-              <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                That is because most design tools help you build <em>things</em>. 
-                They do not help you build <em>feelings</em>.
-              </p>
-              <p className="text-xl text-foreground font-medium">
-                The result? Designs that work but do not resonate. Products that function 
-                but do not connect.
-              </p>
-            </div>
-          </motion.div>
+            <Reveal delay={0.05}>
+              <h2 className="font-display text-[clamp(2.25rem,5vw,4rem)] font-extrabold leading-[0.98]">
+                People are emotional.
+                <br />
+                <span className="text-muted-foreground">Most design tools aren&rsquo;t.</span>
+              </h2>
+            </Reveal>
 
-          {/* Pain points grid */}
-          <div className="grid sm:grid-cols-2 gap-4">
-            {painPoints.map((point, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 30 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.2 + i * 0.1 }}
-                className="flex items-start gap-4 p-5 rounded-xl bg-card/50 border border-border/50 hover:border-border transition-colors"
-              >
-                <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center shrink-0">
-                  <point.icon className="w-5 h-5 text-muted-foreground" />
-                </div>
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  {point.text}
+            <Reveal delay={0.1}>
+              <div className="mt-10 max-w-xl space-y-5 text-lg leading-relaxed text-foreground/70">
+                <p>
+                  You have felt it before. A design that looks correct but feels wrong. Colours that
+                  pass every accessibility check yet refuse to connect. A UI that is usable and
+                  completely forgettable.
                 </p>
-              </motion.div>
-            ))}
+                <p>
+                  Most tools help you build <em className="not-italic text-foreground">things</em>.
+                  Almost none help you build{" "}
+                  <em className="not-italic text-foreground">feelings</em>. So the work functions,
+                  and it does not resonate.
+                </p>
+              </div>
+            </Reveal>
+
+            <ol className="mt-12 max-w-xl">
+              {painPoints.map((point, idx) => (
+                <Reveal as="li" key={idx} delay={0.15 + idx * 0.07} className="border-t border-border/60 py-5">
+                  <div className="flex gap-5">
+                    <span className="label shrink-0 pt-1 text-muted-foreground/60">
+                      {String(idx + 1).padStart(2, "0")}
+                    </span>
+                    <p className="text-pretty text-foreground/75">{point}</p>
+                  </div>
+                </Reveal>
+              ))}
+            </ol>
           </div>
+
+          {/* The drained specimen */}
+          <Reveal delay={0.2} className="lg:sticky lg:top-28">
+            <figure className="plate overflow-hidden">
+              <figcaption className="label flex items-center justify-between border-b border-border/60 px-6 py-4 text-muted-foreground">
+                <span>Specimen — feeling absent</span>
+                <span>desaturated</span>
+              </figcaption>
+              <div className="space-y-8 p-8">
+                <div>
+                  <p className="label mb-3 text-muted-foreground/70">Palette</p>
+                  <div className="flex gap-2">
+                    {deadSwatches.map((c) => (
+                      <div key={c} className="h-12 flex-1 rounded-sm" style={{ background: c }} />
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <p className="label mb-3 text-muted-foreground/70">Type</p>
+                  <p className="font-display text-5xl font-medium text-muted-foreground">Aa Bb Cc</p>
+                  <p className="mt-1 text-sm text-muted-foreground/60">Generic. Correct. Mute.</p>
+                </div>
+                <div>
+                  <p className="label mb-3 text-muted-foreground/70">Mood</p>
+                  <div className="h-2 w-full rounded-full bg-muted">
+                    <div className="h-full w-[8%] rounded-full bg-muted-foreground/40" />
+                  </div>
+                  <p className="mt-2 text-sm text-muted-foreground/60">No emotional intent detected.</p>
+                </div>
+              </div>
+            </figure>
+          </Reveal>
         </div>
       </div>
     </section>

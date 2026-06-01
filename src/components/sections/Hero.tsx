@@ -1,155 +1,190 @@
-import { motion } from "framer-motion";
-import { ArrowRight, Sparkles, Check } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import heroVisual from "@/assets/hero-visual.png";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import EmotionWheel from "@/components/EmotionWheel";
+import { EMOTIONS, PRIMARIES, type EmotionKey } from "@/lib/emotions";
 
-const checkmarks = [
-  "Research-backed palettes",
-  "One-click export",
-  "Instant transformation",
-];
+const PLAY_URL = "https://play.google.com/store/apps/details?id=com.mogster.affectatlas";
+
+const BASE = 200; // px the hidden measurer renders at
+const MAX_PX = 188;
+const MIN_PX = 44;
 
 const Hero = () => {
+  const reduce = useReducedMotion();
+  const [activeKey, setActiveKey] = useState<EmotionKey>("joy");
+  const [paused, setPaused] = useState(false);
+
+  // The wheel is the source of truth: it auto-advances and re-themes the stage.
+  useEffect(() => {
+    if (reduce || paused) return;
+    const id = setInterval(() => {
+      setActiveKey((k) => {
+        const idx = PRIMARIES.findIndex((p) => p.key === k);
+        return PRIMARIES[(idx + 1) % PRIMARIES.length].key;
+      });
+    }, 2800);
+    return () => clearInterval(id);
+  }, [reduce, paused]);
+
+  const e = EMOTIONS[activeKey];
+
+  // Auto-fit the headline word to the column width (the real faces vary wildly).
+  const lineRef = useRef<HTMLSpanElement>(null);
+  const measureRef = useRef<HTMLSpanElement>(null);
+  const [size, setSize] = useState(120);
+  useLayoutEffect(() => {
+    const fit = () => {
+      const line = lineRef.current;
+      const m = measureRef.current;
+      if (!line || !m) return;
+      const avail = line.clientWidth;
+      const w = m.getBoundingClientRect().width;
+      if (!w || !avail) return;
+      setSize(Math.max(MIN_PX, Math.min(MAX_PX, (avail * 0.99 * BASE) / w)));
+    };
+    fit();
+    const ro = new ResizeObserver(fit);
+    if (lineRef.current) ro.observe(lineRef.current);
+    if (typeof document !== "undefined" && document.fonts) document.fonts.ready.then(fit);
+    return () => ro.disconnect();
+  }, [activeKey]);
+
+  // Responsive wheel sizing.
+  const wheelWrap = useRef<HTMLDivElement>(null);
+  const [wheelSize, setWheelSize] = useState(420);
+  useEffect(() => {
+    const fit = () => {
+      const w = wheelWrap.current?.clientWidth;
+      if (w) setWheelSize(Math.max(280, Math.min(440, w)));
+    };
+    fit();
+    const ro = new ResizeObserver(fit);
+    if (wheelWrap.current) ro.observe(wheelWrap.current);
+    return () => ro.disconnect();
+  }, []);
+
+  const handleHover = (k: EmotionKey | null) => {
+    if (k) {
+      setActiveKey(k);
+      setPaused(true);
+    } else {
+      setPaused(false);
+    }
+  };
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 pb-16">
-      <div className="absolute inset-0 bg-hero-gradient" />
-      
-      <div className="absolute inset-0 overflow-hidden">
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 rounded-full bg-primary/20"
-            initial={{
-              x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1400),
-              y: Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 800),
-            }}
-            animate={{
-              y: [null, -100],
-              opacity: [0, 1, 0],
-            }}
-            transition={{
-              duration: 8 + Math.random() * 4,
-              repeat: Infinity,
-              delay: Math.random() * 5,
-            }}
-          />
-        ))}
-      </div>
+    <section
+      data-emotion={activeKey}
+      className="relative flex min-h-[100svh] items-center overflow-hidden pt-28"
+      style={{
+        background: "var(--color-surface)",
+        color: "var(--color-on-surface)",
+        paddingBottom: "var(--space-xl, 2rem)",
+        transition:
+          "background-color .8s var(--motion-easing, ease), color .8s var(--motion-easing, ease)",
+      }}
+    >
+      <div className="atlas grid w-full items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10">
+        {/* Left: headline, re-themed live to the active emotion's real system */}
+        <div style={{ fontFamily: "var(--font-body)" }}>
+          <p className="label mb-7 flex items-center gap-3 opacity-70">
+            <span className="h-px w-10 bg-current opacity-50" />
+            {e.name} · {e.northStar}
+          </p>
 
-      <div className="section-container relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          <div className="text-center lg:text-left">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
+          <h1 style={{ fontFamily: "var(--font-headline)", letterSpacing: "var(--tracking-headline, -0.02em)" }}>
+            <motion.span
+              initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card mb-6"
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="block text-[clamp(1.6rem,3.4vw,2.7rem)] font-semibold leading-[1.05] opacity-90"
             >
-              <Sparkles className="w-4 h-4 text-primary" />
-              <span className="text-sm font-medium text-muted-foreground">
-                For designers with feelings
+              Design systems that start with
+            </motion.span>
+
+            <span ref={lineRef} className="relative mt-2 block w-full" style={{ height: `${size * 0.84}px` }}>
+              <AnimatePresence initial={false}>
+                <motion.span
+                  key={e.key}
+                  initial={reduce ? false : { opacity: 0, y: 22 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={reduce ? undefined : { opacity: 0, y: -22 }}
+                  transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                  className="absolute left-0 top-0 whitespace-nowrap font-extrabold leading-[0.84]"
+                  style={{ color: "var(--color-primary)", fontFamily: "var(--font-headline)", fontSize: `${size}px` }}
+                >
+                  {e.name.toLowerCase()}.
+                </motion.span>
+              </AnimatePresence>
+              <span
+                ref={measureRef}
+                aria-hidden
+                className="pointer-events-none invisible absolute whitespace-nowrap font-extrabold"
+                style={{ fontFamily: "var(--font-headline)", fontSize: `${BASE}px`, left: -99999, top: 0 }}
+              >
+                {e.name.toLowerCase()}.
               </span>
-            </motion.div>
+            </span>
+          </h1>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="font-display text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.1] tracking-tight mb-6"
-            >
-              Design systems for{" "}
-              <span className="gradient-text">that feeling.</span>
-            </motion.h1>
+          <p
+            className="mt-6 max-w-lg text-pretty text-lg opacity-80"
+            style={{ fontFamily: "var(--font-body)", lineHeight: "var(--leading-body, 1.6)" }}
+          >
+            AffectAtlas couples Plutchik's emotion wheel to a full design engine. Pick a feeling and
+            the whole system follows, surface, type, colour, spacing, and motion. This page is the demo.
+          </p>
 
-            <motion.p
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-lg sm:text-xl text-muted-foreground max-w-xl mx-auto lg:mx-0 mb-8 text-balance"
+          <div className="mt-8 flex flex-wrap items-center gap-4">
+            <a
+              href={PLAY_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-2 px-7 py-3.5 text-base font-bold transition-transform duration-300 hover:-translate-y-0.5"
+              style={{
+                background: "var(--color-primary)",
+                color: "var(--color-on-primary)",
+                borderRadius: "var(--radius-lg, 12px)",
+                fontFamily: "var(--font-body)",
+              }}
             >
-              Generate complete design advisories tuned to make your users feel what you want 
-              them to feel. 29 emotions, 11 design dimensions, 9 export formats — each backed 
-              by Plutchik's emotion research.
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-10"
+              Get the app
+              <span className="transition-transform duration-300 group-hover:translate-x-1">↗</span>
+            </a>
+            <a
+              href="#catalogue"
+              className="group inline-flex items-center gap-2 text-base font-semibold opacity-80 transition-opacity hover:opacity-100"
+              style={{ fontFamily: "var(--font-body)" }}
             >
-              <Button 
-                size="lg" 
-                className="text-base px-8 py-6 glow-primary font-semibold group"
-                asChild
-              >
-                <a href="https://play.google.com/store" target="_blank" rel="noopener noreferrer">
-                  Coming to Google Play
-                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </a>
-              </Button>
-              <Button 
-                variant="outline" 
-                size="lg" 
-                className="text-base px-8 py-6 border-border/50 hover:bg-secondary/50"
-                asChild
-              >
-                <a href="#features">See how it works</a>
-              </Button>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="flex flex-wrap gap-4 justify-center lg:justify-start"
-            >
-              {checkmarks.map((item, i) => (
-                <div key={i} className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center">
-                    <Check className="w-3 h-3 text-primary" />
-                  </div>
-                  {item}
-                </div>
-              ))}
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              className="mt-12 pt-8 border-t border-border/30"
-            >
-              <p className="text-sm text-muted-foreground">
-                Free to use. No account required.
-              </p>
-            </motion.div>
+              See the atlas
+              <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+            </a>
           </div>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative flex justify-center lg:justify-end"
-          >
-            <div className="relative">
-              <div className="absolute inset-0 blur-[60px] opacity-25 animate-pulse-slow rounded-full"
-                style={{
-                  background: "conic-gradient(from 0deg, hsl(4, 90%, 58%), hsl(33, 100%, 50%), hsl(48, 100%, 50%), hsl(88, 50%, 49%), hsl(232, 38%, 55%), hsl(199, 98%, 48%), hsl(291, 64%, 42%), hsl(16, 25%, 38%), hsl(4, 90%, 58%))",
-                }}
-              />
-              <img 
-                src={heroVisual} 
-                alt="AffectAtlas — Emotion wheel with flowing design ribbons" 
-                className="relative z-10 w-full max-w-[520px] h-auto drop-shadow-2xl"
-              />
-            </div>
-          </motion.div>
+          <p className="label mt-6 opacity-60">Free to explore · {e.font} + {e.levels.join(" / ")}</p>
         </div>
+
+        {/* Right: the interactive wheel drives it all */}
+        <motion.div
+          ref={wheelWrap}
+          initial={{ opacity: 0, scale: 0.92 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col items-center"
+        >
+          <EmotionWheel activeKey={activeKey} onHover={handleHover} size={wheelSize} />
+          <p className="label mt-6 text-center opacity-70">Plutchik's wheel · hover a petal to explore</p>
+        </motion.div>
       </div>
+
+      {/* fade the (possibly light) hero into the dark journey below */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-28"
+        style={{ background: "linear-gradient(to bottom, transparent, hsl(var(--background)))" }}
+      />
     </section>
   );
 };
 
 export default Hero;
-

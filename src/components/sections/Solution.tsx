@@ -1,96 +1,71 @@
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
-import { useRef } from "react";
-import { Lightbulb, BookOpen, Heart } from "lucide-react";
+import Reveal from "@/components/Reveal";
 import EmotionScreenShowcase from "@/components/EmotionScreenShowcase";
+import { EMOTIONS } from "@/lib/emotions";
 
-const credentials = [
-  { icon: BookOpen, text: "Backed by 40+ years of emotion research" },
-];
+const trust = EMOTIONS.trust.inkVar;
 
 const Solution = () => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
   return (
-    <section ref={ref} className="relative py-24 lg:py-32 overflow-hidden">
-      <div className="section-container">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          {/* Left side - Text content */}
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6">
-              <Lightbulb className="w-4 h-4 text-primary" />
-              <span className="text-sm font-medium text-primary">The solution</span>
-            </div>
-
-            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 tracking-tight">
-              What if your design system started with{" "}
-              <span className="gradient-text">how you want people to feel?</span>
-            </h2>
-
-            <div className="space-y-6 text-muted-foreground mb-10">
-              <p className="text-lg leading-relaxed">
-                We built AffectAtlas because we have been where you are — staring at 
-                color pickers, wondering why nothing feels right. Tweaking type scales 
-                that look fine but do not land.
+    <section id="solution" className="relative py-28 lg:py-40">
+      <div className="atlas">
+        <div className="grid gap-16 lg:grid-cols-2 lg:items-center">
+          <div>
+            <Reveal>
+              <p className="label mb-8 flex items-center gap-3" style={{ color: trust }}>
+                <span className="h-px w-10" style={{ background: trust }} />
+                Plate Nº 02 — The flip
               </p>
-              <p className="text-lg leading-relaxed">
-                So we did the research. We synthesized decades of work in psychology, 
-                color science, and emotional design into a single tool that does what 
-                your intuition wishes it could: translate feelings into design tokens.
-              </p>
-              <p className="text-lg leading-relaxed font-medium text-foreground">
-                AffectAtlas flips the process. Instead of starting with colors and 
-                hoping they evoke the right emotion, you start with the emotion and 
-                let the design follow.
-              </p>
-            </div>
+            </Reveal>
 
-            {/* Love variants callout */}
-            <div className="glass-card rounded-xl p-5 mb-8">
-              <div className="flex items-start gap-3">
-                <Heart className="w-5 h-5 text-primary mt-0.5 shrink-0" />
-                <div>
-                  <p className="text-sm font-medium text-foreground mb-1">Some emotions run deeper</p>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    Love offers three variant advisories — Love, Passion, and Lust — each with 
-                    its own complete design system, showing how a single emotion can express itself 
-                    in radically different visual languages.
-                  </p>
-                </div>
+            <Reveal delay={0.05}>
+              <h2 className="font-display text-[clamp(2.25rem,4.6vw,3.75rem)] font-extrabold leading-[1.0]">
+                What if your design system began with{" "}
+                <span style={{ color: trust }}>how you want people to feel?</span>
+              </h2>
+            </Reveal>
+
+            <Reveal delay={0.1}>
+              <div className="mt-10 max-w-xl space-y-5 text-lg leading-relaxed text-foreground/70">
+                <p>
+                  We built AffectAtlas because we had been where you are: staring at colour pickers,
+                  wondering why nothing felt right, nudging type scales that looked fine and never
+                  landed.
+                </p>
+                <p>
+                  So we did the research, synthesising decades of work in psychology, colour science,
+                  and emotional design into one tool that does what intuition wishes it could. It
+                  translates a feeling into design tokens.
+                </p>
+                <p className="font-medium text-foreground">
+                  Start with the emotion. Let the design follow.
+                </p>
               </div>
-            </div>
+            </Reveal>
 
-            {/* Credentials */}
-            <div className="flex flex-wrap gap-4">
-              {credentials.map((cred, i) => (
-                <div
-                  key={i}
-                  className="flex items-center gap-2 text-sm text-muted-foreground"
-                >
-                  <cred.icon className="w-4 h-4 text-primary" />
-                  {cred.text}
-                </div>
-              ))}
-            </div>
-          </motion.div>
+            <Reveal delay={0.15}>
+              <div className="mt-10">
+                <div className="hairline mb-5" style={{ ["--world" as string]: trust }} />
+                <p className="text-sm font-semibold uppercase tracking-wide" style={{ color: trust }}>
+                  Some feelings run deeper
+                </p>
+                <p className="mt-2 max-w-lg text-pretty text-muted-foreground">
+                  Love alone offers three variant advisories, Love, Passion, and Lust, each a complete
+                  design system. One emotion, three radically different visual languages.
+                </p>
+              </div>
+            </Reveal>
 
-          {/* Right side - Emotion screen showcase */}
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="relative"
-          >
+            <Reveal delay={0.2}>
+              <p className="label mt-8 text-muted-foreground">Backed by 40+ years of emotion research</p>
+            </Reveal>
+          </div>
+
+          <Reveal delay={0.15}>
             <EmotionScreenShowcase />
-            <p className="text-center text-sm text-muted-foreground mt-6">
-              Same app, different emotions — the design system transforms everything.
+            <p className="mt-6 text-center text-sm text-muted-foreground">
+              Same app, three emotions. The design system transforms everything.
             </p>
-          </motion.div>
+          </Reveal>
         </div>
       </div>
     </section>

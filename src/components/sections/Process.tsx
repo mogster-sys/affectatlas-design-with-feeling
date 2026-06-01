@@ -1,68 +1,56 @@
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
-import { useRef } from "react";
-import { MousePointer, Cog, Sparkles } from "lucide-react";
+import Reveal from "@/components/Reveal";
+import { EMOTIONS } from "@/lib/emotions";
 
 const steps = [
   {
-    number: "01",
-    icon: MousePointer,
+    n: "01",
+    emotion: EMOTIONS.joy,
     title: "Select your emotion",
-    description: "Choose from 8 primary emotions on the interactive wheel. Blend them for nuance.",
+    body: "Choose from eight primaries on the interactive wheel, then blend them for nuance.",
   },
   {
-    number: "02", 
-    icon: Cog,
+    n: "02",
+    emotion: EMOTIONS.trust,
     title: "We handle the complexity",
-    description: "Our engine maps your emotion across 11 design dimensions — colors, typography, spacing, motion, depth, shapes, layout, iconography, and rules — each backed by research from Plutchik's psychoevolutionary theory and curated by AI design tools.",
+    body: "The engine maps your emotion across eleven design dimensions, each grounded in Plutchik's psychoevolutionary theory.",
   },
   {
-    number: "03",
-    icon: Sparkles,
-    title: "Export your design system",
-    description: "Export to CSS, Tailwind, Figma Tokens, and 6 other formats — Swift, Kotlin, SCSS, JSON, W3C Design Tokens, and AI Prompt. Start designing immediately.",
+    n: "03",
+    emotion: EMOTIONS.anticipation,
+    title: "Export your system",
+    body: "Ship to CSS, Tailwind, Figma Tokens, Swift, Kotlin, SCSS, JSON, W3C Design Tokens, or an AI prompt. Nine formats, ready to build.",
   },
 ];
 
 const Process = () => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
   return (
-    <section ref={ref} className="relative py-24 lg:py-32 overflow-hidden bg-card/30">
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-border to-transparent" />
-      
-      <div className="section-container">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center max-w-3xl mx-auto mb-16"
-        >
-          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 tracking-tight">
-            From emotion to export in <span className="gradient-text">3 simple steps</span>
+    <section id="process" className="relative py-28 lg:py-40">
+      <div className="atlas">
+        <Reveal>
+          <p className="label mb-8 flex items-center gap-3 text-muted-foreground">
+            <span className="h-px w-10 bg-current opacity-50" />
+            Plate Nº 06 — How it works
+          </p>
+        </Reveal>
+        <Reveal delay={0.05}>
+          <h2 className="max-w-3xl font-display text-[clamp(2rem,4.6vw,3.75rem)] font-extrabold leading-[1.0]">
+            From a feeling to a finished system, in three steps.
           </h2>
-        </motion.div>
+        </Reveal>
 
-        <div className="grid md:grid-cols-3 gap-8 relative">
-          {/* Connection line */}
-          <div className="hidden md:block absolute top-20 left-1/6 right-1/6 h-px bg-gradient-to-r from-primary via-accent to-emotion-trust" />
-          
-          {steps.map((step, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 40 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.1 * i }}
-              className="relative text-center"
-            >
-              <div className="w-16 h-16 rounded-2xl bg-primary mx-auto mb-6 flex items-center justify-center relative z-10">
-                <step.icon className="w-8 h-8 text-primary-foreground" />
-              </div>
-              <div className="text-sm text-primary font-semibold mb-2">Step {step.number}</div>
-              <h3 className="font-display text-xl font-semibold mb-3">{step.title}</h3>
-              <p className="text-muted-foreground">{step.description}</p>
-            </motion.div>
+        <div className="mt-16 grid gap-12 md:grid-cols-3 md:gap-10">
+          {steps.map((s, idx) => (
+            <Reveal key={s.n} delay={0.08 * idx} className="pt-6">
+              <div className="mb-6 h-[2px] w-full" style={{ background: s.emotion.inkVar, opacity: 0.7 }} />
+              <span
+                className={`${s.emotion.fontClass} block text-[clamp(3rem,7vw,5.5rem)] leading-[0.8]`}
+                style={{ color: s.emotion.inkVar }}
+              >
+                {s.n}
+              </span>
+              <h3 className="mt-5 font-display text-2xl font-bold">{s.title}</h3>
+              <p className="mt-3 text-pretty leading-relaxed text-foreground/70">{s.body}</p>
+            </Reveal>
           ))}
         </div>
       </div>

@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import Hero from "@/components/sections/Hero";
 import Problem from "@/components/sections/Problem";
 import Solution from "@/components/sections/Solution";
@@ -6,28 +7,110 @@ import EmotionCatalogue from "@/components/sections/EmotionCatalogue";
 import DesignAdvisory from "@/components/sections/DesignAdvisory";
 import Process from "@/components/sections/Process";
 import FinalCTA from "@/components/sections/FinalCTA";
-import logo from "@/assets/affectatlas-logo.png";
+import JourneyBackground from "@/components/JourneyBackground";
+import { PRIMARIES } from "@/lib/emotions";
+
+const PLAY_URL = "https://play.google.com/store/apps/details?id=com.mogster.affectatlas";
+
+const Nav = () => {
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <nav className="fixed inset-x-0 top-0 z-50 text-foreground">
+      <div
+        className={`absolute inset-0 transition-colors duration-500 ${
+          scrolled
+            ? "border-b border-border/60 bg-background/80 backdrop-blur-md"
+            : "bg-gradient-to-b from-background/55 to-transparent"
+        }`}
+      />
+      <div className="atlas relative flex h-16 items-center justify-between">
+        <a href="#top" className="group flex items-baseline gap-3">
+          <span className="flex items-center gap-[3px]" aria-hidden>
+            {PRIMARIES.map((e) => (
+              <span
+                key={e.key}
+                className="h-3.5 w-[3px] rounded-full transition-transform duration-300 group-hover:scale-y-125"
+                style={{ background: e.inkVar }}
+              />
+            ))}
+          </span>
+          <span className="font-display text-[1.05rem] font-extrabold tracking-tight">AffectAtlas</span>
+        </a>
+
+        <div className="flex items-center gap-7">
+          <a href="#catalogue" className="label hidden text-muted-foreground transition-colors hover:text-foreground sm:inline">
+            The atlas
+          </a>
+          <a href="#process" className="label hidden text-muted-foreground transition-colors hover:text-foreground sm:inline">
+            How it works
+          </a>
+          <a
+            href={PLAY_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex items-center gap-1.5 rounded-full border border-foreground/20 px-4 py-1.5 text-sm font-semibold transition-colors hover:border-foreground/50"
+          >
+            Get the app
+            <span className="transition-transform duration-300 group-hover:translate-x-0.5">↗</span>
+          </a>
+        </div>
+      </div>
+    </nav>
+  );
+};
+
+const Footer = () => (
+  <footer className="relative border-t border-border/60">
+    <div className="atlas py-16">
+      <div className="flex flex-col gap-12 lg:flex-row lg:items-end lg:justify-between">
+        <div className="max-w-md">
+          <div className="mb-4 flex items-center gap-[3px]" aria-hidden>
+            {PRIMARIES.map((e) => (
+              <span key={e.key} className="h-5 w-1.5 rounded-full" style={{ background: e.inkVar }} />
+            ))}
+          </div>
+          <p className="font-display text-2xl font-extrabold tracking-tight">AffectAtlas</p>
+          <p className="mt-2 text-pretty text-muted-foreground">
+            An atlas of feeling. Twenty-nine emotions, mapped to complete, research-backed design systems.
+          </p>
+        </div>
+
+        <div className="flex flex-col gap-3 text-sm text-muted-foreground lg:items-end">
+          <a
+            href={PLAY_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold text-foreground transition-colors hover:text-[var(--e-joy)]"
+          >
+            Get it on Google Play ↗
+          </a>
+          <a
+            href="https://mogster-sys.github.io/affectatlas-privacy/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="transition-colors hover:text-foreground"
+          >
+            Privacy Policy
+          </a>
+          <p className="label mt-3 text-muted-foreground/70">© 2026 Three Eyed Emu</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+);
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background">
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 glass-card border-b border-border/50">
-        <div className="section-container">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-3">
-              <img src={logo} alt="AffectAtlas" className="h-10 w-auto" />
-              <span className="font-display font-bold text-xl">AffectAtlas</span>
-            </div>
-            <div className="hidden md:flex items-center gap-8">
-              <a href="#features" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Features</a>
-              <a href="https://play.google.com/store" target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-primary hover:text-primary/80 transition-colors">Coming to Google Play →</a>
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      {/* Main content */}
+    <div id="top" className="relative min-h-screen">
+      <JourneyBackground />
+      <Nav />
       <main>
         <Hero />
         <Problem />
@@ -38,21 +121,7 @@ const Index = () => {
         <Process />
         <FinalCTA />
       </main>
-
-      {/* Footer */}
-      <footer className="border-t border-border/50 py-12">
-        <div className="section-container">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-3">
-              <img src={logo} alt="AffectAtlas" className="h-8 w-auto" />
-              <span className="font-display font-semibold">AffectAtlas</span>
-            </div>
-            <p className="text-sm text-muted-foreground">
-              © 2026 Three Eyed Emu. All rights reserved. · <a href="https://mogster-sys.github.io/affectatlas-privacy/" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors underline">Privacy Policy</a>
-            </p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };

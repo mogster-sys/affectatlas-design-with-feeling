@@ -1,159 +1,179 @@
-import { motion } from "framer-motion";
-
-const emotions = [
-  { name: "Anger", color: "hsl(4, 90%, 58%)", rotation: 0 },
-  { name: "Anticipation", color: "hsl(33, 100%, 50%)", rotation: 45 },
-  { name: "Joy", color: "hsl(48, 100%, 50%)", rotation: 90 },
-  { name: "Trust", color: "hsl(88, 50%, 49%)", rotation: 135 },
-  { name: "Sadness", color: "hsl(232, 38%, 55%)", rotation: 180 },
-  { name: "Surprise", color: "hsl(199, 98%, 48%)", rotation: 225 },
-  { name: "Fear", color: "hsl(291, 64%, 42%)", rotation: 270 },
-  { name: "Disgust", color: "hsl(16, 25%, 38%)", rotation: 315 },
-];
+import { useReducedMotion } from "framer-motion";
+import { PRIMARIES, EMOTIONS, DYAD_NAMES, type EmotionKey } from "@/lib/emotions";
 
 interface EmotionWheelProps {
+  activeKey: EmotionKey;
+  onHover?: (key: EmotionKey | null) => void;
   size?: number;
   className?: string;
-  animated?: boolean;
 }
 
-export const EmotionWheel = ({ size = 400, className = "", animated = true }: EmotionWheelProps) => {
-  const center = size / 2;
-  const outerRadius = size * 0.45;
-  const innerRadius = size * 0.15;
-  
-  const createWedgePath = (startAngle: number, endAngle: number) => {
-    const startOuter = polarToCartesian(center, center, outerRadius, startAngle);
-    const endOuter = polarToCartesian(center, center, outerRadius, endAngle);
-    const startInner = polarToCartesian(center, center, innerRadius, endAngle);
-    const endInner = polarToCartesian(center, center, innerRadius, startAngle);
-    
-    const largeArc = endAngle - startAngle > 180 ? 1 : 0;
-    
-    return `M ${startOuter.x} ${startOuter.y}
-            A ${outerRadius} ${outerRadius} 0 ${largeArc} 1 ${endOuter.x} ${endOuter.y}
-            L ${startInner.x} ${startInner.y}
-            A ${innerRadius} ${innerRadius} 0 ${largeArc} 0 ${endInner.x} ${endInner.y}
-            Z`;
-  };
-  
-  const polarToCartesian = (cx: number, cy: number, r: number, angle: number) => {
-    const rad = ((angle - 90) * Math.PI) / 180;
-    return {
-      x: cx + r * Math.cos(rad),
-      y: cy + r * Math.sin(rad),
-    };
-  };
-  
-  const getLabelPosition = (angle: number) => {
-    const labelRadius = outerRadius * 0.72;
-    return polarToCartesian(center, center, labelRadius, angle + 22.5);
-  };
+// top = 0deg, clockwise
+const polar = (cx: number, cy: number, r: number, deg: number) => {
+  const rad = (deg * Math.PI) / 180;
+  return { x: cx + r * Math.sin(rad), y: cy - r * Math.cos(rad) };
+};
+
+const sector = (cx: number, cy: number, rin: number, rout: number, a0: number, a1: number) => {
+  const o1 = polar(cx, cy, rout, a0);
+  const o2 = polar(cx, cy, rout, a1);
+  const i2 = polar(cx, cy, rin, a1);
+  const i1 = polar(cx, cy, rin, a0);
+  return `M ${o1.x} ${o1.y} A ${rout} ${rout} 0 0 1 ${o2.x} ${o2.y} L ${i2.x} ${i2.y} A ${rin} ${rin} 0 0 0 ${i1.x} ${i1.y} Z`;
+};
+
+const mix = (ink: string, kind: "intense" | "base" | "mild") =>
+  kind === "intense"
+    ? `color-mix(in oklab, ${ink}, black 26%)`
+    : kind === "mild"
+    ? `color-mix(in oklab, ${ink}, white 32%)`
+    : ink;
+
+/**
+ * Plutchik's wheel, interactive. Eight primary petals, each in three intensity
+ * rings (intense at centre → mild at the rim, which is exactly the product's
+ * "3 intensities" model). Dyads surface in the gaps between adjacent petals.
+ * Controlled: hovering a petal reports up so the hero headline can follow it.
+ */
+export const EmotionWheel = ({ activeKey, onHover, size = 460, className = "" }: EmotionWheelProps) => {
+  const reduce = useReducedMotion();
+  const c = size / 2;
+  const r0 = size * 0.158;
+  const r1 = size * 0.258;
+  const r2 = size * 0.348;
+  const r3 = size * 0.45;
+  const bands: [number, number, "intense" | "base" | "mild"][] = [
+    [r0 + size * 0.014, r1, "intense"],
+    [r1, r2, "base"],
+    [r2, r3, "mild"],
+  ];
+  const active = EMOTIONS[activeKey];
+  const GAP = 1.8;
 
   return (
-    <motion.div 
-      className={`relative ${className}`}
-      initial={animated ? { scale: 0.8, opacity: 0 } : undefined}
-      animate={animated ? { scale: 1, opacity: 1 } : undefined}
-      transition={{ duration: 0.8, ease: "easeOut" }}
-    >
-      {/* Glow effect behind the wheel */}
-      <div 
-        className="absolute inset-0 blur-3xl opacity-40"
-        style={{
-          background: `conic-gradient(from 0deg, ${emotions.map(e => e.color).join(', ')}, ${emotions[0].color})`,
-          borderRadius: "50%",
-        }}
-      />
-      
-      <svg
-        width={size}
-        height={size}
-        viewBox={`0 0 ${size} ${size}`}
-        className="relative z-10"
-      >
-        <defs>
-          {emotions.map((emotion, i) => (
-            <radialGradient key={`grad-${i}`} id={`gradient-${i}`} cx="50%" cy="50%" r="50%">
-              <stop offset="40%" stopColor={emotion.color} stopOpacity="1" />
-              <stop offset="100%" stopColor={emotion.color} stopOpacity="0.7" />
-            </radialGradient>
-          ))}
-          
-          <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="3" result="coloredBlur" />
-            <feMerge>
-              <feMergeNode in="coloredBlur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-        </defs>
-        
-        <g filter="url(#glow)">
-          {emotions.map((emotion, i) => {
-            const startAngle = i * 45;
-            const endAngle = (i + 1) * 45;
-            
+    <div className={`relative mx-auto ${className}`} style={{ width: size, height: size }}>
+      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="overflow-visible">
+        {/* slow decorative degree ring */}
+        <g className={reduce ? undefined : "animate-spin-slow"} style={{ transformOrigin: `${c}px ${c}px` }}>
+          {Array.from({ length: 72 }).map((_, k) => {
+            const a = k * 5;
+            const p1 = polar(c, c, r3 + size * 0.022, a);
+            const p2 = polar(c, c, r3 + size * 0.038, a);
             return (
-              <motion.path
-                key={emotion.name}
-                d={createWedgePath(startAngle, endAngle)}
-                fill={`url(#gradient-${i})`}
-                stroke="hsla(240, 20%, 6%, 0.3)"
-                strokeWidth="1"
-                initial={animated ? { opacity: 0, scale: 0.5 } : undefined}
-                animate={animated ? { opacity: 1, scale: 1 } : undefined}
-                transition={{ delay: i * 0.05, duration: 0.4 }}
-                whileHover={{ 
-                  filter: "brightness(1.2)",
-                  scale: 1.02,
-                }}
-                style={{ 
-                  transformOrigin: "center",
-                  cursor: "pointer",
-                }}
+              <line
+                key={k}
+                x1={p1.x} y1={p1.y} x2={p2.x} y2={p2.y}
+                stroke="currentColor"
+                strokeWidth={k % 2 ? 0.5 : 1}
+                opacity={0.25}
               />
             );
           })}
         </g>
-        
-        <circle
-          cx={center}
-          cy={center}
-          r={innerRadius - 2}
-          fill="hsl(240, 20%, 6%)"
-          stroke="hsla(220, 20%, 95%, 0.1)"
-          strokeWidth="1"
-        />
-        
-        {emotions.map((emotion, i) => {
-          const pos = getLabelPosition(i * 45);
-          const angle = i * 45 + 22.5;
-          const textRotation = angle > 90 && angle < 270 ? angle + 180 : angle;
-          
+
+        {/* petals */}
+        {PRIMARIES.map((e, i) => {
+          const a0 = i * 45;
+          const a1 = (i + 1) * 45;
+          const isActive = e.key === activeKey;
+          const bis = (a0 + a1) / 2;
+          const rad = (bis * Math.PI) / 180;
+          const d = isActive ? size * 0.022 : 0;
           return (
-            <motion.text
-              key={`label-${emotion.name}`}
-              x={pos.x}
-              y={pos.y}
-              textAnchor="middle"
-              dominantBaseline="middle"
-              fill="hsla(240, 20%, 6%, 0.9)"
-              fontSize={size * 0.032}
-              fontWeight="600"
-              fontFamily="'Instrument Sans', sans-serif"
-              transform={`rotate(${textRotation}, ${pos.x}, ${pos.y})`}
-              initial={animated ? { opacity: 0 } : undefined}
-              animate={animated ? { opacity: 1 } : undefined}
-              transition={{ delay: 0.5 + i * 0.05 }}
-              style={{ pointerEvents: "none" }}
+            <g
+              key={e.key}
+              role="button"
+              tabIndex={0}
+              aria-label={`${e.name} — ${e.levels.join(", ")}`}
+              transform={`translate(${Math.sin(rad) * d} ${-Math.cos(rad) * d})`}
+              onMouseEnter={() => onHover?.(e.key)}
+              onMouseLeave={() => onHover?.(null)}
+              onFocus={() => onHover?.(e.key)}
+              onBlur={() => onHover?.(null)}
+              style={{
+                cursor: "pointer",
+                opacity: isActive ? 1 : 0.36,
+                transition: "opacity .4s ease, transform .55s cubic-bezier(.16,1,.3,1)",
+              }}
             >
-              {emotion.name}
-            </motion.text>
+              {bands.map(([rin, rout, kind]) => (
+                <path key={kind} d={sector(c, c, rin, rout - 2, a0 + GAP, a1 - GAP)} style={{ fill: mix(e.ink, kind) }} />
+              ))}
+            </g>
           );
         })}
+
+        {/* dyads in the gaps — names surface when an adjacent primary is active */}
+        {DYAD_NAMES.map((name, k) => {
+          const a = (k + 1) * 45;
+          const A = PRIMARIES[k];
+          const B = PRIMARIES[(k + 1) % 8];
+          const adj = A.key === activeKey || B.key === activeKey;
+          const dot = polar(c, c, (r0 + r1) / 2, a);
+          const lab = polar(c, c, r3 * 0.7, a);
+          return (
+            <g key={name} style={{ transition: "opacity .3s" }} opacity={adj ? 1 : 0.5}>
+              <circle cx={dot.x} cy={dot.y} r={size * 0.013} style={{ fill: `color-mix(in oklab, ${A.ink}, ${B.ink})` }} />
+              {adj && (
+                <text
+                  x={lab.x} y={lab.y}
+                  textAnchor="middle" dominantBaseline="middle"
+                  fontFamily="'Spline Sans Mono', monospace"
+                  fontSize={size * 0.026}
+                  style={{ fill: "currentColor" }}
+                >
+                  {name}
+                </text>
+              )}
+            </g>
+          );
+        })}
+
+        {/* primary labels outside the rim */}
+        {PRIMARIES.map((e, i) => {
+          const bis = i * 45 + 22.5;
+          const p = polar(c, c, r3 + size * 0.085, bis);
+          const isActive = e.key === activeKey;
+          const anchor = p.x < c - 2 ? "end" : p.x > c + 2 ? "start" : "middle";
+          return (
+            <text
+              key={e.key}
+              x={p.x} y={p.y}
+              textAnchor={anchor} dominantBaseline="middle"
+              fontFamily="'Spline Sans Mono', monospace"
+              fontSize={size * 0.029}
+              letterSpacing="0.08em"
+              style={{
+                fill: isActive ? e.ink : "currentColor",
+                opacity: isActive ? 1 : 0.5,
+                fontWeight: isActive ? 700 : 500,
+                textTransform: "uppercase",
+                transition: "fill .3s ease, opacity .3s ease",
+                pointerEvents: "none",
+              }}
+            >
+              {e.name}
+            </text>
+          );
+        })}
+
+        {/* hub */}
+        <circle cx={c} cy={c} r={r0} fill="var(--color-surface, hsl(36 16% 6%))" stroke={active.ink} strokeOpacity={0.55} strokeWidth={1.5} />
       </svg>
-    </motion.div>
+
+      {/* hub legend: the active emotion's three intensities */}
+      <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-1 text-center">
+        <span className="label" style={{ fontSize: size * 0.023, color: active.ink, opacity: 0.9 }}>
+          {active.levels[2]}
+        </span>
+        <span className="label font-display font-bold tracking-tight" style={{ fontSize: size * 0.05, letterSpacing: "0.02em", color: "currentColor" }}>
+          {active.levels[1]}
+        </span>
+        <span className="label" style={{ fontSize: size * 0.023, color: "currentColor", opacity: 0.6 }}>
+          {active.levels[0]}
+        </span>
+      </div>
+    </div>
   );
 };
 
